@@ -20,14 +20,14 @@ function App() {
         <Axis scale={x} translate={[left, height + top]} type="bottom" />
         <Axis scale={y} translate={[left, top]} type="left" />
         <g transform={`translate(${left}, ${top})`}>
-          {data.map((dot, i) => (
+          {data.map(({ gdpPercap, lifeExp, pop }) => (
             <circle
-              key={i}
-              cx={x(dot.gdpPercap)}
-              cy={y(dot.lifeExp)}
-              r={z(dot.pop)}
+              key={gdpPercap}
+              cx={x(gdpPercap)}
+              cy={y(lifeExp)}
+              r={z(pop)}
               style={{ fill: "#69b3a2", opacity: "0.7", stroke: "black" }}
-            ></circle>
+            />
           ))}
         </g>
       </svg>
