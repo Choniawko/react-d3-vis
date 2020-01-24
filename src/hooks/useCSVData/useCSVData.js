@@ -6,5 +6,5 @@ export const useCSVData = url => {
   useEffect(() => {
     csv(url).then(setData)
   }, [url])
-  return { data }
+  return data
 }
