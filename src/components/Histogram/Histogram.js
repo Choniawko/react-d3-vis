@@ -1,6 +1,11 @@
 import React from "react"
 import { max } from "d3"
-import { margin, getScaleLinear, getHistogram, baseUrl } from "../../common"
+import {
+  margin,
+  getScaleLinear,
+  getHistogram,
+  dataToVizUrl,
+} from "../../common"
 import { useCSVData } from "../../hooks"
 import { Axis } from "../Axis"
 
@@ -9,7 +14,7 @@ const width = 500
 
 export const Histogram = () => {
   const { top, right, bottom, left } = margin
-  const data = useCSVData(baseUrl("1_OneNum.csv"))
+  const data = useCSVData(dataToVizUrl("1_OneNum.csv"))
   const x = getScaleLinear({ domain: [0, 1000], range: [0, width] })
   const histogram = getHistogram({ x, key: "price", amount: 50 })
   const bins = histogram(data)
