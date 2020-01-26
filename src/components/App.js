@@ -3,6 +3,7 @@ import { BubblePlot } from "./BubblePlot"
 import { Histogram } from "./Histogram"
 import { PieChart } from "./PieChart"
 import { ScatterPlot } from "./ScatterPlot"
+import { LineChart } from "./LineChart"
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <BubblePlot />
       <Histogram />
       <ScatterPlot />
+      <LineChart />
       <PieChart />
     </div>
   )

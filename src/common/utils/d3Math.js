@@ -4,6 +4,7 @@ export const getScaleLinear = ({ domain, range }) =>
   scaleLinear()
     .domain(domain)
     .range(range)
+
 export const getScaleOrdinal = ({ domain, range }) =>
   scaleOrdinal()
     .domain(domain)
