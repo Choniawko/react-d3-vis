@@ -9,8 +9,8 @@ import {
 import { useCSVData } from "../../hooks"
 import { Axis } from "../Axis"
 
-const height = 420
-const width = 500
+const height = 260
+const width = 260
 const { top, right, bottom, left } = margin
 
 export const LineChart = () => {
@@ -25,7 +25,7 @@ export const LineChart = () => {
   })
   const y = getScaleLinear({
     domain: [0, max(data, ({ n }) => +n)],
-    range: [height, 0],
+    range: [height, top],
   })
   const color = getScaleOrdinal({
     domain: allKeys,
@@ -43,26 +43,30 @@ export const LineChart = () => {
   })
   return (
     <div style={{ textAlign: "center" }}>
-      <svg width={width + left + right} height={height + top + bottom}>
-        <Axis
-          scale={x}
-          translate={[left, height + top]}
-          type="bottom"
-          ticks={3}
-        />
-        <Axis scale={y} translate={[left, top]} type="left" />
-        <g transform={`translate(${left}, ${top})`}>
-          {sumstat.map(({ values, key }) =>
-            values.map(d => (
-              <path
-                key={d.prop}
-                d={line()(values.map(({ year, n }) => [x(year), y(+n)]))}
-                style={{ fill: "none", stroke: color(key), strokeWidth: 1.5 }}
-              />
-            )),
-          )}
-        </g>
-      </svg>
+      {sumstat.map(({ values, key }) => (
+        <svg
+          key={key}
+          width={width + left + right}
+          height={height + top + bottom}
+        >
+          <Axis
+            scale={x}
+            translate={[left, height + top]}
+            type="bottom"
+            ticks={3}
+          />
+          <Axis scale={y} translate={[left, top]} type="left" />
+          <g transform={`translate(${left}, ${top})`}>
+            <text textAnchor="start" y={5} x={0} style={{ fill: color(key) }}>
+              {key}
+            </text>
+            <path
+              d={line()(values.map(({ year, n }) => [x(year), y(+n)]))}
+              style={{ fill: "none", stroke: color(key), strokeWidth: 1.5 }}
+            />
+          </g>
+        </svg>
+      ))}
     </div>
   )
 }
