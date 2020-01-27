@@ -1,1 +1,1 @@
-export * from "./useCSVData"
+export * from "./useData"
