@@ -1,4 +1,12 @@
-import { scaleLinear, scaleOrdinal, scaleTime, histogram, pie, arc } from "d3"
+import {
+  scaleLinear,
+  scaleOrdinal,
+  scaleTime,
+  scaleThreshold,
+  histogram,
+  pie,
+  arc,
+} from "d3"
 
 export const getScaleLinear = ({ domain, range }) =>
   scaleLinear()
@@ -12,6 +20,11 @@ export const getScaleOrdinal = ({ domain, range }) =>
 
 export const getScaleTime = ({ domain, range }) =>
   scaleTime()
+    .domain(domain)
+    .range(range)
+
+export const getColorScale = ({ domain, range }) =>
+  scaleThreshold()
     .domain(domain)
     .range(range)
 
