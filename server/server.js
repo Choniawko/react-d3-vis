@@ -24,7 +24,7 @@ io.on("connection", socket => {
     const value = Math.floor(Math.random() * 101)
     io.emit("value", value)
     console.log("emit value", value)
-  }, 1000)
+  }, 10)
   console.log("a user connected")
 })
 
