@@ -26,9 +26,9 @@ export const RTLineChart = () => {
       : items.reduce(
           (acc, curr, i, arr) =>
             i < maxDomain - 1
-              ? [...acc.slice(0, i), [curr[0], arr[i + 1][1]], ...acc.slice(i)]
-              : [...acc.slice(0, i), [curr[0], y(newItem)]],
-          items,
+              ? [...acc, [curr[0], arr[i + 1][1]]]
+              : [...acc, [curr[0], y(newItem)]],
+          [],
         )
   useSocket("value", newItem => setItem(updateItems(newItem)))
   return (
