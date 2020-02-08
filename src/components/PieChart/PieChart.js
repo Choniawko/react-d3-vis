@@ -1,6 +1,6 @@
 import React from "react"
 import { entries } from "d3"
-import { margin, getPie, getScaleOrdinal, getArc } from "../../common"
+import { margin, getPie, getScaleOrdinal, getArc } from "common/utils"
 
 const height = 450
 const width = 450

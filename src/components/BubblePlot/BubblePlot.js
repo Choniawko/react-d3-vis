@@ -1,7 +1,7 @@
 import React from "react"
-import { margin, getScaleLinear, dataToVizUrl } from "../../common"
+import { margin, getScaleLinear, dataToVizUrl } from "common/utils"
+import { Axis } from "common/UI"
 import { useCSVData } from "../../hooks"
-import { Axis } from "../Axis"
 
 const height = 420
 const width = 500

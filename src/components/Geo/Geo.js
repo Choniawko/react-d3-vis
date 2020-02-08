@@ -1,6 +1,6 @@
 import React from "react"
 import { geoPath, geoNaturalEarth1, schemeBlues } from "d3"
-import { margin, graphGalleryUrl, getColorScale } from "../../common"
+import { margin, graphGalleryUrl, getColorScale } from "common/utils"
 import { useJSONData, useCSVData } from "../../hooks"
 
 const height = 420

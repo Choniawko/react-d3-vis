@@ -5,9 +5,9 @@ import {
   getScaleLinear,
   graphGalleryUrl,
   getScaleTime,
-} from "../../common"
+} from "common/utils"
+import { Axis, Brush } from "common/UI"
 import { useCSVData } from "../../hooks"
-import { Axis } from "../Axis"
 
 const height = 420
 const width = 500
@@ -28,6 +28,7 @@ export const ScatterPlot = () => {
   return (
     <div style={{ textAlign: "center" }}>
       <svg width={width + left + right} height={height + top + bottom}>
+        <Brush {...{ width, height }} />
         <Axis scale={x} translate={[left, height + top]} type="bottom" />
         <Axis scale={y} translate={[left, top]} type="left" />
         <g transform={`translate(${left}, ${top})`}>

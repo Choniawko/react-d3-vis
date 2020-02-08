@@ -2,8 +2,8 @@ import React, { useState } from "react"
 import { line } from "d3"
 import { useSocket } from "use-socketio"
 
-import { margin, getScaleLinear } from "../../common"
-import { Axis } from "../Axis"
+import { margin, getScaleLinear } from "common/utils"
+import { Axis } from "common/UI"
 
 const height = 420
 const width = 500

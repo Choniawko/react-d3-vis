@@ -5,9 +5,9 @@ import {
   getScaleLinear,
   getScaleOrdinal,
   dataToVizUrl,
-} from "../../common"
+} from "common/utils"
+import { Axis } from "common/UI"
 import { useCSVData } from "../../hooks"
-import { Axis } from "../Axis"
 
 const height = 260
 const width = 260
