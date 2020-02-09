@@ -1,11 +1,6 @@
 import React, { useState } from "react"
 import { max } from "d3"
-import {
-  margin,
-  getScaleLinear,
-  getHistogram,
-  dataToVizUrl,
-} from "common/utils"
+import { margin, getScale, getHistogram, dataToVizUrl } from "common/utils"
 import { Tooltip, Axis } from "common/UI"
 import { useCSVData } from "../../hooks"
 
@@ -13,7 +8,7 @@ const height = 420
 const width = 500
 
 const { top, right, bottom, left } = margin
-const x = getScaleLinear({ domain: [0, 1000], range: [0, width] })
+const x = getScale({ type: "linear", domain: [0, 1000], range: [0, width] })
 
 export const Histogram = () => {
   const data = useCSVData(dataToVizUrl("1_OneNum.csv"))
@@ -23,7 +18,8 @@ export const Histogram = () => {
   const [binAmount, setBinAmount] = useState(40)
   const histogram = getHistogram({ x, key: "price", amount: binAmount })
   const bins = histogram(data)
-  const y = getScaleLinear({
+  const y = getScale({
+    type: "linear",
     domain: [0, max(bins, ({ length }) => length)],
     range: [height, 0],
   })

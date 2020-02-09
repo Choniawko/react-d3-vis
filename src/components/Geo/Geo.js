@@ -1,6 +1,6 @@
 import React from "react"
 import { geoPath, geoNaturalEarth1, schemeBlues } from "d3"
-import { margin, graphGalleryUrl, getColorScale } from "common/utils"
+import { margin, graphGalleryUrl, getScale } from "common/utils"
 import { useJSONData, useCSVData } from "../../hooks"
 
 const height = 420
@@ -22,7 +22,8 @@ export const Geo = () => {
     }),
     {},
   )
-  const colorScale = getColorScale({
+  const colorScale = getScale({
+    type: "threshold",
     domain: [100000, 1000000, 10000000, 30000000, 100000000, 500000000],
     range: schemeBlues[7],
   })

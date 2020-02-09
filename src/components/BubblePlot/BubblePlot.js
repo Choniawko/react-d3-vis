@@ -1,5 +1,5 @@
 import React from "react"
-import { margin, getScaleLinear, dataToVizUrl } from "common/utils"
+import { margin, getScale, dataToVizUrl } from "common/utils"
 import { Axis } from "common/UI"
 import { useCSVData } from "../../hooks"
 
@@ -7,9 +7,13 @@ const height = 420
 const width = 500
 
 const { top, right, bottom, left } = margin
-const x = getScaleLinear({ domain: [0, 10000], range: [0, width] })
-const y = getScaleLinear({ domain: [35, 90], range: [height, 0] })
-const z = getScaleLinear({ domain: [200000, 1310000000], range: [1, 40] })
+const x = getScale({ type: "linear", domain: [0, 10000], range: [0, width] })
+const y = getScale({ type: "linear", domain: [35, 90], range: [height, 0] })
+const z = getScale({
+  type: "linear",
+  domain: [200000, 1310000000],
+  range: [1, 40],
+})
 
 export const BubblePlot = () => {
   const data = useCSVData(dataToVizUrl("4_ThreeNum.csv"))

@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { line } from "d3"
 import { useSocket } from "use-socketio"
 
-import { margin, getScaleLinear } from "common/utils"
+import { margin, getScale } from "common/utils"
 import { Axis } from "common/UI"
 
 const height = 420
@@ -12,11 +12,14 @@ const { top, right, bottom, left } = margin
 
 export const RTLineChart = () => {
   const [items, setItem] = useState([])
-  const x = getScaleLinear({
+  const lineGenerator = line()
+  const x = getScale({
+    type: "linear",
     domain: [0, maxDomain],
     range: [0, width],
   })
-  const y = getScaleLinear({
+  const y = getScale({
+    type: "linear",
     domain: [0, maxDomain],
     range: [height, top],
   })
@@ -42,7 +45,7 @@ export const RTLineChart = () => {
       <Axis scale={y} translate={[left, top]} type="left" />
       <g transform={`translate(${left}, ${top})`}>
         <path
-          d={line()(items)}
+          d={lineGenerator(items)}
           style={{ fill: "none", stroke: "#69b3a2", strokeWidth: 1.5 }}
         />
       </g>

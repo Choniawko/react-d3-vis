@@ -1,18 +1,13 @@
 import React from "react"
 import { extent, timeParse, line } from "d3"
-import {
-  margin,
-  getScaleLinear,
-  graphGalleryUrl,
-  getScaleTime,
-} from "common/utils"
+import { margin, graphGalleryUrl, getScale } from "common/utils"
 import { Axis, Brush } from "common/UI"
 import { useCSVData } from "../../hooks"
 
 const height = 420
 const width = 500
 const { top, right, bottom, left } = margin
-const y = getScaleLinear({ domain: [8000, 9200], range: [height, 0] })
+const y = getScale({ type: "linear", domain: [8000, 9200], range: [height, 0] })
 
 export const ScatterPlot = () => {
   const data = useCSVData(graphGalleryUrl("connectedscatter.csv")).map(
@@ -21,7 +16,8 @@ export const ScatterPlot = () => {
       value,
     }),
   )
-  const x = getScaleTime({
+  const x = getScale({
+    type: "time",
     domain: extent(data, ({ date }) => date),
     range: [0, width],
   })

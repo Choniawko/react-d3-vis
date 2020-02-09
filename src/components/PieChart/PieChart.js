@@ -1,6 +1,6 @@
 import React from "react"
 import { entries } from "d3"
-import { margin, getPie, getScaleOrdinal, getArc } from "common/utils"
+import { margin, getPie, getScale, getArc } from "common/utils"
 
 const height = 450
 const width = 450
@@ -9,7 +9,8 @@ const { top, right, bottom, left } = margin
 const radius = Math.min(width, height) / 2 - 40
 const arc = getArc(radius)
 const data = { a: 9, b: 20, c: 30, d: 8, e: 12 }
-const color = getScaleOrdinal({
+const color = getScale({
+  type: "ordinal",
   domain: data,
   range: colorRange,
 })

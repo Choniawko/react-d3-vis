@@ -1,42 +1,28 @@
-import {
-  scaleLinear,
-  scaleOrdinal,
-  scaleTime,
-  scaleThreshold,
-  histogram,
-  pie,
-  arc,
-} from "d3"
+import * as d3 from "d3"
 
-export const getScaleLinear = ({ domain, range }) =>
-  scaleLinear()
-    .domain(domain)
-    .range(range)
+const types = {
+  linear: "scaleLinear",
+  ordinal: "scaleOrdinal",
+  time: "scaleTime",
+  threshold: "scaleThreshold",
+}
 
-export const getScaleOrdinal = ({ domain, range }) =>
-  scaleOrdinal()
-    .domain(domain)
-    .range(range)
-
-export const getScaleTime = ({ domain, range }) =>
-  scaleTime()
-    .domain(domain)
-    .range(range)
-
-export const getColorScale = ({ domain, range }) =>
-  scaleThreshold()
+export const getScale = ({ type, domain, range }) =>
+  d3[types[type]]()
     .domain(domain)
     .range(range)
 
 export const getHistogram = ({ x, key, amount }) =>
-  histogram()
+  d3
+    .histogram()
     .value(d => d[key])
     .domain(x.domain())
     .thresholds(x.ticks(amount))
 
-export const getPie = key => pie().value(d => d[key])
+export const getPie = key => d3.pie().value(d => d[key])
 
 export const getArc = radius =>
-  arc()
+  d3
+    .arc()
     .innerRadius(0)
     .outerRadius(radius)

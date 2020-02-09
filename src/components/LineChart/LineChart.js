@@ -1,45 +1,45 @@
 import React from "react"
 import { extent, line, nest, max } from "d3"
-import {
-  margin,
-  getScaleLinear,
-  getScaleOrdinal,
-  dataToVizUrl,
-} from "common/utils"
+import { margin, getScale, dataToVizUrl } from "common/utils"
 import { Axis } from "common/UI"
 import { useCSVData } from "../../hooks"
 
 const height = 260
 const width = 260
+const colors = [
+  "#e41a1c",
+  "#377eb8",
+  "#4daf4a",
+  "#984ea3",
+  "#ff7f00",
+  "#ffff33",
+  "#a65628",
+  "#f781bf",
+  "#999999",
+]
 const { top, right, bottom, left } = margin
 
 export const LineChart = () => {
   const data = useCSVData(dataToVizUrl("5_OneCatSevNumOrdered.csv"))
+  const lineGenerator = line()
   const sumstat = nest()
     .key(({ name }) => name)
     .entries(data)
   const allKeys = sumstat.map(({ key }) => key)
-  const x = getScaleLinear({
+  const x = getScale({
+    type: "linear",
     domain: extent(data, ({ year }) => year),
     range: [0, width],
   })
-  const y = getScaleLinear({
+  const y = getScale({
+    type: "linear",
     domain: [0, max(data, ({ n }) => +n)],
     range: [height, top],
   })
-  const color = getScaleOrdinal({
+  const color = getScale({
+    type: "ordinal",
     domain: allKeys,
-    range: [
-      "#e41a1c",
-      "#377eb8",
-      "#4daf4a",
-      "#984ea3",
-      "#ff7f00",
-      "#ffff33",
-      "#a65628",
-      "#f781bf",
-      "#999999",
-    ],
+    range: colors,
   })
   return (
     <div style={{ textAlign: "center" }}>
@@ -61,7 +61,7 @@ export const LineChart = () => {
               {key}
             </text>
             <path
-              d={line()(values.map(({ year, n }) => [x(year), y(+n)]))}
+              d={lineGenerator(values.map(({ year, n }) => [x(year), y(+n)]))}
               style={{ fill: "none", stroke: color(key), strokeWidth: 1.5 }}
             />
           </g>
