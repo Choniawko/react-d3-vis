@@ -26,7 +26,7 @@ app.get("/", (_, res) => {
 })
 
 io.on("connection", socket => {
-  setInterval(interval, 10)
+  setInterval(interval, 100)
   console.log("a user connected")
   socket.on("disconnect", () => {
     clearInterval(interval)

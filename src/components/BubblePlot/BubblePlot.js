@@ -5,8 +5,8 @@ import { useCSVData } from "../../hooks"
 
 const height = 420
 const width = 500
-
 const { top, right, bottom, left } = margin
+
 const x = getScale({ type: "linear", domain: [0, 10000], range: [0, width] })
 const y = getScale({ type: "linear", domain: [35, 90], range: [height, 0] })
 const z = getScale({

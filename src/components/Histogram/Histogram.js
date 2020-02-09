@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { max } from "d3"
 import { margin, getScale, getHistogram, dataToVizUrl } from "common/utils"
 import { Tooltip, Axis } from "common/UI"
+import { useTooltip } from "common/hooks"
 import { useCSVData } from "../../hooks"
 
 const height = 420
@@ -12,9 +13,14 @@ const x = getScale({ type: "linear", domain: [0, 1000], range: [0, width] })
 
 export const Histogram = () => {
   const data = useCSVData(dataToVizUrl("1_OneNum.csv"))
-  const [visibled, setVisibled] = useState(false)
-  const [[positionLeft, positionTop], sePosition] = useState([0, 0])
-  const [value, setValue] = useState(false)
+  const {
+    visibled,
+    position: [positionLeft, positionTop],
+    value,
+    handleShowTooltip,
+    handleHideTooltip,
+    handleMoveTooltip,
+  } = useTooltip()
   const [binAmount, setBinAmount] = useState(40)
   const histogram = getHistogram({ x, key: "price", amount: binAmount })
   const bins = histogram(data)
@@ -32,16 +38,7 @@ export const Histogram = () => {
     } = e
     binsAmount.value && setBinAmount(binsAmount.value)
   }
-  const handleShowTooltip = () => {
-    setVisibled(true)
-  }
-  const handleHideTooltip = () => {
-    setVisibled(false)
-  }
-  const handleMoveTooltip = ({ x0, x1 }) => ({ clientX, clientY }) => {
-    sePosition([clientX, clientY])
-    setValue(`Range: ${x0} - ${x1}`)
-  }
+
   return (
     <div style={{ textAlign: "center", position: "relative" }}>
       <svg width={width + left + right} height={height + top + bottom}>
