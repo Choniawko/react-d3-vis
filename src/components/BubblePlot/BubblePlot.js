@@ -1,6 +1,8 @@
 import React from "react"
 import { margin, getScale, dataToVizUrl } from "common/utils"
-import { Axis } from "common/UI"
+import { Axis, Tooltip } from "common/UI"
+import { useTooltip } from "common/hooks"
+
 import { useCSVData } from "../../hooks"
 
 const height = 420
@@ -17,14 +19,25 @@ const z = getScale({
 
 export const BubblePlot = () => {
   const data = useCSVData(dataToVizUrl("4_ThreeNum.csv"))
+  const {
+    visibled,
+    position: [positionLeft, positionTop],
+    value,
+    handleShow,
+    handleHide,
+    handleMove,
+  } = useTooltip()
   return (
-    <div style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center", position: "relative" }}>
       <svg width={width + left + right} height={height + top + bottom}>
         <Axis scale={x} translate={[left, height + top]} type="bottom" />
         <Axis scale={y} translate={[left, top]} type="left" />
         <g transform={`translate(${left}, ${top})`}>
-          {data.map(({ gdpPercap, lifeExp, pop }) => (
+          {data.map(({ gdpPercap, lifeExp, pop, country }) => (
             <circle
+              onMouseMove={handleShow}
+              onMouseLeave={handleHide}
+              onMouseOver={handleMove(country)}
               key={gdpPercap}
               cx={x(gdpPercap)}
               cy={y(lifeExp)}
@@ -34,6 +47,9 @@ export const BubblePlot = () => {
           ))}
         </g>
       </svg>
+      {visibled && (
+        <Tooltip left={positionLeft} top={positionTop} {...{ value }} />
+      )}
     </div>
   )
 }

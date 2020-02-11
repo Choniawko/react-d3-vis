@@ -17,9 +17,9 @@ export const Histogram = () => {
     visibled,
     position: [positionLeft, positionTop],
     value,
-    handleShowTooltip,
-    handleHideTooltip,
-    handleMoveTooltip,
+    handleShow,
+    handleHide,
+    handleMove,
   } = useTooltip()
   const [binAmount, setBinAmount] = useState(40)
   const histogram = getHistogram({ x, key: "price", amount: binAmount })
@@ -49,9 +49,9 @@ export const Histogram = () => {
             .filter(({ x0, x1 }) => x(x1) - x(x0) > 0)
             .map(({ x0, x1, length }) => (
               <rect
-                onMouseMove={handleShowTooltip}
-                onMouseLeave={handleHideTooltip}
-                onMouseOver={handleMoveTooltip({ x0: x(x0), x1: x(x1) })}
+                onMouseMove={handleShow}
+                onMouseLeave={handleHide}
+                onMouseOver={handleMove(`Range: ${x0} - ${x1}`)}
                 key={x0}
                 x={1}
                 width={x(x1) - x(x0) - 1}
