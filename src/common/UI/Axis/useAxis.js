@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import * as d3 from "d3"
 import { getScale } from "common/utils"
 
@@ -7,11 +7,33 @@ const types = {
   bottom: "axisBottom",
 }
 
-export const useAxis = ({ type, domain, range, ticks }) => {
+export const useAxis = ({
+  type,
+  scaleType,
+  domain = [0, 0],
+  range = [],
+  ticks,
+  isScalable = false,
+}) => {
   const ref = useRef(null)
-  const scale = getScale({ type, domain, range })
+  const [scale, setScale] = useState(() =>
+    getScale({ type: scaleType, domain, range }),
+  )
   useEffect(() => {
+    setScale(() => getScale({ type: scaleType, domain, range }))
     d3.select(ref.current).call(d3[types[type]](scale).ticks(ticks))
-  }, [scale, ticks, type])
-  return { scale, ref }
+    //eslint-disable-next-line
+  }, [])
+  useEffect(() => {
+    if (
+      isScalable &&
+      scale.invert(1) !== getScale({ type: scaleType, domain, range }).invert(1)
+    ) {
+      setScale(() => getScale({ type: scaleType, domain, range }))
+      d3.select(ref.current).call(d3[types[type]](scale).ticks(ticks))
+    }
+    //eslint-disable-next-line
+  }, [scaleType, ticks, type, domain, range])
+
+  return { scale, setScale, ref }
 }
